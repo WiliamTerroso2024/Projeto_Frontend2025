@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url('mapa-localizacao.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+
+        .description {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 95%;
+            padding: 10px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .error {
+            color: red;
+            margin: 10px 0;
+        }
+
+        .new-user {
+            margin-top: 20px;
+        }
+
+        .new-user button {
+            background: #28a745;
+        }
+
+        .new-user button:hover {
+            background: #218838;
+        }
+
+        .success {
+            color: green;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Bem-vindo!</h2>
+        <p class="description">Este é o sistema de localização de dispositivos. Faça login para acessar o mapa e acompanhar os dispositivos em tempo real.</p>
+        
+        <form id="login-form">
+            <input type="text" id="username" placeholder="Nome de usuário" required />
+            <input type="password" id="password" placeholder="Senha" required />
+            <button type="submit">Entrar</button>
+        </form>
+        
+        <p class="error" id="error-message"></p>
+
+        <div class="new-user">
+            <h3>Criar novo usuário</h3>
+            <input type="text" id="new-username" placeholder="Novo nome de usuário" required />
+            <input type="password" id="new-password" placeholder="Nova senha" required />
+            <button id="create-user-btn">Criar usuário</button>
+            <p class="success" id="success-message"></p>
+        </div>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('login-form');
+        const errorMessage = document.getElementById('error-message');
+        const createUserBtn = document.getElementById('create-user-btn');
+        const successMessage = document.getElementById('success-message');
+
+        // Recupera os usuários salvos no localStorage ou inicializa um array vazio
+        const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+
+        // Função de login
+        loginForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Verifica se o usuário existe com as credenciais informadas
+            const user = storedUsers.find(u => u.username === username && u.password === password);
+
+            if (user) {
+                window.location.href = "dashboard.html"; // Redireciona para a dashboard se o login for bem-sucedido
+            } else {
+                errorMessage.textContent = "Nome de usuário ou senha inválidos!";
+            }
+        });
+
+        // Função de criar novo usuário
+        createUserBtn.addEventListener('click', function () {
+            const newUsername = document.getElementById('new-username').value;
+            const newPassword = document.getElementById('new-password').value;
+
+            // Verifica se o nome de usuário já existe
+            const userExists = storedUsers.some(u => u.username === newUsername);
+
+            if (userExists) {
+                successMessage.textContent = "Esse nome de usuário já está em uso.";
+                successMessage.style.color = 'red';
+            } else {
+                // Cria um novo usuário e salva no localStorage
+                storedUsers.push({ username: newUsername, password: newPassword });
+                localStorage.setItem('users', JSON.stringify(storedUsers));
+                successMessage.textContent = "Usuário criado com sucesso!";
+                successMessage.style.color = 'green';
+            }
+        });
+    </script>
+</body>
+</html>

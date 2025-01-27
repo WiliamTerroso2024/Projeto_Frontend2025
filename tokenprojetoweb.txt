@@ -1,0 +1,6 @@
+
+
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI1ZWNmZGJiYTUwNTQ0ODQ3YTRjMGFkMWExNWQxOGMzMSIsImlhdCI6MTczNzkzNDU5NCwiZXhwIjoyMDUzMjk0NTk0fQ.01ixOHFnurgg9DamYpigCMlHW3ESgNYTTLHKURjrhDw
+
+id divice:
+device_tracker.2312dra50g  
